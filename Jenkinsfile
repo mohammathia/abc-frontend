@@ -5,7 +5,7 @@ agent any
 environment {
 AWS_REGION="ap-south-1"
 S3_BUCKET= "assesment-s3-210795"
-CLOUDFRONT_DISTRUBUTION_ID= "E18E61W9ACOZIM"
+CLOUDFRONT_DISTRIBUTION_ID= "E18E61W9ACOZIM"
 }
 stages{
 stage ('1.Checkout'){
