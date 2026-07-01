@@ -26,7 +26,7 @@ steps{
 withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS-Cred', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
 sh """
 aws s3 sync dist/  s3://$S3_BUCKET
-aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRUBUTION_ID --paths "/*"
+aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
 """
 }
 }
