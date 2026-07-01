@@ -16,7 +16,7 @@ git branch: 'main', url: 'https://github.com/akshayshetty709/abc-frontend.git'
 stage ('2.install dependencies and build'){
 steps{
 sh """
-npm ci
+npm install
 npm run build 
 """
 }
