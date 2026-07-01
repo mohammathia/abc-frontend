@@ -1,50 +1,39 @@
 pipeline {
-    agent any
-
-    environment {
-        AWS_DEFAULT_REGION = 'ap-south-1'
-        S3_BUCKET = 'private-frontend'
-        CLOUDFRONT_DISTRIBUTION_ID = 'E2QBILELS5NOMA'
-    }
-
-    stages {
-        stage('Clone Frontend Repo') {
-            steps {
-                git branch: 'main', 
-                credentialsId: 'github-creds', 
-                url: 'https://github.com/akshayshetty709/abc-frontend.git'
-            }
-        }
-
-        stage('Install & Build') {
-            steps {
-                echo "installing"
-                sh '''
-                npm install
-                npm run build
-                '''
-            }
-        }
-
-        stage('Deploy to AWS') {
-            steps {
-                
-                withCredentials([
-                    aws(credentialsId: 'AWS-CRED', 
-                        accessKeyVariable: 'AWS_ACCESS_KEY_ID', 
-                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')
-                ]) {
-                    sh '''
-                    echo "Uploading to S3..."
-                    aws s3 sync build/ s3://$S3_BUCKET --delete
-                    
-                    echo "Invalidating CloudFront Cache..."
-                    aws cloudfront create-invalidation \
-                    --distribution-id $CLOUDFRONT_DISTRIBUTION_ID \
-                    --paths "/*"
-                    '''
-                }
-            }
-        }
-    }
+agent any
+tools 
+{
+ nodejs "Node20"
 }
+
+environment {
+AWS_REGION="ap-south-1"
+S3_BUCKET= "assesment-s3-210795"
+CLOUDFRONT_DISTRUBUTION_ID= "E18E61W9ACOZIM"
+}
+stages{
+stage ('1.Checkout'){
+steps{
+git branch: 'main', url: 'https://github.com/akshayshetty709/abc-frontend.git'
+}
+}
+stage ('2.install dependencies and build'){
+steps{
+sh """
+npm ci
+npm run build 
+"""
+}
+}
+stage ('3. upload files to s3 and invalidate cloundfront'){
+steps{
+withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS-Cred', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+sh """
+aws s3 sync dist/  s3://$S3_BUCKET
+aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRUBUTION_ID --paths "/*"
+"""
+}
+}
+}
+}
+}
+
