@@ -1,9 +1,6 @@
 pipeline {
 agent any
-tools 
-{
- nodejs "Node20"
-}
+
 
 environment {
 AWS_REGION="ap-south-1"
