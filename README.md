@@ -1,3 +1,8 @@
+https://medium.com/@brucewayne090792/provisioning-aws-infrastructure-for-a-kubernetes-cluster-using-terraform-4cd4dff08688
+
+
+https://medium.com/@brucewayne090792/setting-up-a-kubernetes-cluster-on-aws-ec2-using-ansible-59feff2f517a
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
